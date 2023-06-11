@@ -28,7 +28,7 @@ function loadMenu() {
             categoria: cells[0],
             plato: cells[1],
             valor: cells[2],
-            imagen: cells[3],
+            imagen: cells[5],
             descripcion: cells[4] // Añadimos la descripción aquí
           });
         }

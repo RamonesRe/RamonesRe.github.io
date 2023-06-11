@@ -49,9 +49,7 @@ function renderItems(items) {
     var itemDiv = document.createElement('div');
     itemDiv.classList.add('item');
 
-    var img = document.createElement('img');
-    img.src = item.imagen;
-    itemDiv.appendChild(img);
+
 
     var categoria = document.createElement('p');
     categoria.textContent = item.categoria;

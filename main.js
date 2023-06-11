@@ -28,6 +28,7 @@ function loadMenu() {
             categoria: cells[0],
             plato: cells[1],
             valor: cells[2],
+            imagen: cells[3],
             descripcion: cells[4] // Añadimos la descripción aquí
           });
         }
@@ -49,7 +50,9 @@ function renderItems(items) {
     var itemDiv = document.createElement('div');
     itemDiv.classList.add('item');
 
-
+    var img = document.createElement('img');
+    img.src = item.imagen;
+    itemDiv.appendChild(img);
 
     var categoria = document.createElement('p');
     categoria.textContent = item.categoria;

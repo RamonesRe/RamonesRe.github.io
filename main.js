@@ -10,7 +10,7 @@ window.onload = function() {
 // La función loadMenu se encarga de buscar los datos del menú de la hoja de Google Sheets y procesarlos.
 function loadMenu() {
   // URL del documento de Google Sheets publicado como CSV.
-  var url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR8nAxczgGDnc_ZJ5t_Hwv0cMdERix-boG6s8SvpCZ6LN6eR-ODrV7iSQ0dFQbqMFYXzdUcuHgHmG7M/pub?output=csv";
+  var url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRnWzywz5HkLN2JtoNlOTp3l7JTqk0ps9VoS6n9bNsjj5V-S8ZqSp8KmZyDxhDfMgwBdWdU-jncoWEw/pub?output=csv";
   
   // Usa fetch para obtener los datos de la URL.
   fetch(url)

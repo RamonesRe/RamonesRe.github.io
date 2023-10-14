@@ -1,76 +1,84 @@
-// Este código se ejecutará una vez que la ventana del navegador se haya cargado completamente.
 window.onload = function() {
-  // Carga el menú inmediatamente después de que la ventana se haya cargado.
   loadMenu();
-
-  // Configura un temporizador para volver a cargar el menú cada 60 segundos (60000 milisegundos).
   setInterval(loadMenu, 60000);
 };
 
-// La función loadMenu se encarga de buscar los datos del menú de la hoja de Google Sheets y procesarlos.
 function loadMenu() {
-  // URL del documento de Google Sheets publicado como CSV.
   var url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRnWzywz5HkLN2JtoNlOTp3l7JTqk0ps9VoS6n9bNsjj5V-S8ZqSp8KmZyDxhDfMgwBdWdU-jncoWEw/pub?output=csv";
-  
-  // Usa fetch para obtener los datos de la URL.
   fetch(url)
-    .then(response => response.text()) // Convierte la respuesta en texto.
+    .then(response => response.text())
     .then(data => {
-      var lines = data.split("\n"); // Divide los datos de texto en líneas.
+      var lines = data.split("\n");
       var items = [];
-
-      // Itera a través de cada línea, ignorando la primera línea (la cabecera).
       lines.forEach((line, index) => {
         if(index !== 0) {
-          var cells = line.split(","); // Divide cada línea en celdas basándose en la coma.
-          // Empuja cada fila de datos en la matriz de artículos como un objeto.
+          var cells = line.split(",");
           items.push({
             categoria: cells[0],
             plato: cells[1],
             valor: cells[2],
             imagen: cells[3],
-            descripcion: cells[4] // Añadimos la descripción aquí
+            descripcion: cells[4]
           });
         }
       });
-      // Envía los elementos a la función renderItems para que sean visualizados.
-      renderItems(items);
+      renderCategories(items);
     });
 }
 
-// La función renderItems toma los elementos del menú y los visualiza en el DOM.
-function renderItems(items) {
-  // Selecciona el elemento del menú del DOM.
-  var menuDiv = document.getElementById('menu');
-  menuDiv.innerHTML = ''; // Limpiar el contenido existente
+function renderCategories(items) {
+  var categoryContainer = document.getElementById('categoryContainer');
+  var uniqueCategories = [...new Set(items.map(item => item.categoria))];
+  categoryContainer.innerHTML = '';
+  uniqueCategories.forEach(category => {
+    var categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+    categoryDiv.addEventListener('click', () => showMenuByCategory(items, category));
+    
+    var img = document.createElement('img');
+    img.src = items.find(item => item.categoria === category).imagen;
+    categoryDiv.appendChild(img);
 
-  // Itera sobre cada elemento.
-  items.forEach(item => {
-    // Crea y configura los elementos del DOM para cada propiedad del elemento.
+    var categoryLabel = document.createElement('p');
+    categoryLabel.textContent = category;
+    categoryLabel.classList.add('category-label');
+    categoryDiv.appendChild(categoryLabel);
+    categoryContainer.appendChild(categoryDiv);
+  });
+}
+
+function showMenuByCategory(items, category) {
+  var filteredItems = items.filter(item => item.categoria === category);
+  var menuDiv = document.getElementById('menu');
+  menuDiv.innerHTML = '';
+  filteredItems.forEach(item => {
     var itemDiv = document.createElement('div');
     itemDiv.classList.add('item');
-
     var img = document.createElement('img');
     img.src = item.imagen;
     itemDiv.appendChild(img);
-
-    var categoria = document.createElement('p');
-    categoria.textContent = item.categoria;
-    itemDiv.appendChild(categoria);
-
     var plato = document.createElement('h2');
     plato.textContent = item.plato;
     itemDiv.appendChild(plato);
-
     var descripcion = document.createElement('p');
     descripcion.textContent = item.descripcion;
     itemDiv.appendChild(descripcion);
-
     var valor = document.createElement('p');
     valor.textContent = "$" + item.valor;
     itemDiv.appendChild(valor);
-
-    // Agrega el elemento a la lista en el DOM.
     menuDiv.appendChild(itemDiv);
   });
+
+  document.getElementById('menu').style.display = 'block';
+  document.getElementById('categoryContainer').style.display = 'none';
+  document.getElementById('welcome-section').style.display = 'none';
+  document.getElementById('backButton').style.display = 'block';
+  
+  document.getElementById('backButton').onclick = function() {
+    document.getElementById('menu').style.display = 'none';
+    document.getElementById('categoryContainer').style.display = 'block';
+    document.getElementById('welcome-section').style.display = 'block';
+    document.getElementById('backButton').style.display = 'none';
+  };
 }
+

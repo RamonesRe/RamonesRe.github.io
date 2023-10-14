@@ -2,16 +2,23 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <!-- Asegurarse de que la página web se escala correctamente en todos los dispositivos -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ramones Restaurant</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h1>Ramones Restaurant</h1>
-  <div id="menu-description">Menú para el día de hoy</div>
-  <div id="menu"></div>
+  <div id="backButton" style="display:none;">
+    <span>Regresar</span> ⬅️
+  </div>
+  <div id="welcome-section" style="display:block;">
+    <h2>RAMONES RESTAURANT</h2>
+    <p>🍽️ Bienvenidos a Ramones Restaurant 🍽️</p>
+    <p>Estamos emocionados de compartir nuestra pasión por la buena comida con ustedes. Gracias por elegirnos. ¡Buen provecho!</p>
+  </div>
+  <div id="categoryContainer" style="display:block;"></div>
+  <div id="menu" style="display:none;"></div>
 
   <script src="main.js"></script>
 </body>
 </html>
+
